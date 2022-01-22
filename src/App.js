@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import CardList from './CardList';
 import SearchBox from './SearchBox';
-import { robots } from './robots';
+import axios from 'axios';
 import './App.css';
 
 class App extends Component {
   constructor() {
     super();
-    this.state = { robots: robots, searchField: '' };
+    this.state = { robots: [], searchField: '' };
+  }
+
+  componentDidMount() {
+    const url = 'https://jsonplaceholder.typicode.com/users';
+    axios.get(url).then((res) => {
+      this.setState({ robots: res.data });
+    });
   }
 
   onSearchChange = (event) => {
